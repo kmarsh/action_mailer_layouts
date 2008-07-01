@@ -1,3 +1,8 @@
+== Action Mailer Layouts
+
+Original Homepage:   http://cardboardrocket.com/pages/action_mailer_layouts
+Original svn:        http://svn.cardboardrocket.com/action_mailer_layouts
+
 A plugin to enable layouts for ActionMailer templates.
 
 Adds a new 'layout' property to the ActionMailer::Base class. Specify the name
