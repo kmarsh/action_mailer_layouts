@@ -8,7 +8,14 @@ module ActionMailer
 
     def render_message(method_name, body)
       layout = @layout ? @layout.to_s.clone : self.class.to_s.underscore
-      md = /^([^\.]+)\.([^\.]+\.[^\.]+)\.(erb|rhtml|rxml)$/.match(method_name)
+      
+      filename = if method_name.respond_to?(:filename)
+        method_name.filename
+      else
+        method_name
+      end
+          
+      md = /^([^\.]+)\.([^\.]+\.[^\.]+)\.(erb|rhtml|rxml)$/.match(filename)
       layout << ".#{md.captures[1]}" if md && md.captures[1]
       layout << ".#{md.captures[2]}" if md && md.captures[2]
 
@@ -25,7 +32,7 @@ module ActionMailer
     
     def initialize_layout_template_class(assigns)
       # for Rails 2.1 (and greater), we have to process view paths first!
-      ActionView::TemplateFinder.process_view_paths(layouts_path)
+      ActionView::TemplateFinder.process_view_paths(layouts_path) if defined?(ActionView::TemplateFinder)
       
       returning(template = ActionView::Base.new(layouts_path, assigns, self)) do
         template.extend self.class.master_helper_module
