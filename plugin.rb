@@ -15,7 +15,8 @@ module ActionMailer
         method_name
       end
           
-      md = /^([^\.]+)\.([^\.]+\.[^\.]+)\.(erb|rhtml|rxml)$/.match(filename)
+      md = /([^\.]+)\.([^\.]+\.[^\.]+)\.(erb|rhtml|rxml)$/.match(filename)
+      
       layout << ".#{md.captures[1]}" if md && md.captures[1]
       layout << ".#{md.captures[2]}" if md && md.captures[2]
 
